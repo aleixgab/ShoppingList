@@ -61,9 +61,10 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
     public void OnClick(View view) {
         String text = edit_box.getText().toString();
-        items.add(new ShoppingItem(text, false));
-        adapter.notifyItemInserted(items.size() - 1);
-        edit_box.setText("");
-
+        if(!text.isEmpty()) {
+            items.add(new ShoppingItem(text, false));
+            adapter.notifyItemInserted(items.size() - 1);
+            edit_box.setText("");
+        }
     }
 }
