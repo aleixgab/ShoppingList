@@ -24,4 +24,8 @@ public class ShoppingItem {
     public void setCheck(boolean check) {
         this.check = check;
     }
+
+    public void ToggleCheckBox() {
+        check = !check;
+    }
 }
