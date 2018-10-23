@@ -2,4 +2,6 @@
     <string name="app_name">ShoppingList</string>
     <string name="enter_new_item_hint">Enter new item...</string>
     <string name="Delete">delete</string>
+    <string name="confirm">Yes</string>
+    <string name="text">Do you want to delete?</string>
 </resources>

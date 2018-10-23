@@ -1,5 +1,7 @@
 package info.pauek.shoppinglist;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -60,6 +62,28 @@ public class ShoppingListActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        adapter.setOnLongClickListener(new ShoppingListAdapter.OnLongClickListener() {
+            @Override
+            public void onLongClick(final int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingListActivity.this);
+
+                builder.setTitle(R.string.Delete)
+                        .setMessage(R.string.text)
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                items.remove(position);
+                                adapter.notifyItemRemoved(position);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null);
+
+
+                builder.create().show();
+
+            }
+        });
     }
 
     @Override
@@ -73,20 +97,21 @@ public class ShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.option_btn_delete:
-                for (int pos = 0; pos < items.size(); ++pos)
+                int pos = 0;
+                while ( pos < items.size())
                 {
                     if(items.get(pos).isCheck())
                     {
                         items.remove(pos);
                         adapter.notifyItemRemoved(pos);
-                        pos--;
                     }
+                    else
+                        pos++;
                 }
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public void OnClick(View view) {
         String text = edit_box.getText().toString();
