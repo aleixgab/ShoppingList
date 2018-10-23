@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -54,11 +56,38 @@ public class ShoppingListActivity extends AppCompatActivity {
             public void onClick(int position) {
 
                 items.get(position).ToggleCheckBox();
-                //Cridar sempre despres de canviar model
+                // Cridar sempre despres de canviar model
                 adapter.notifyDataSetChanged();
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.shopping_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.option_btn_delete:
+                for (int pos = 0; pos < items.size(); ++pos)
+                {
+                    if(items.get(pos).isCheck())
+                    {
+                        items.remove(pos);
+                        adapter.notifyItemRemoved(pos);
+                        pos--;
+                    }
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     public void OnClick(View view) {
         String text = edit_box.getText().toString();
         if(!text.isEmpty()) {
